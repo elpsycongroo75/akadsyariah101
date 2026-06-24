@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Akad Pembiayaan Syariah</title>
+    <meta name="description" content="Panduan interaktif akad pembiayaan syariah: Murabahah, Mudharabah, Musyarakah, MMQ.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --white: #ffffff;
+            --bg: #f8f7f4;
+            --bg-warm: #faf9f6;
+            --rose-50: #fff5f5;
+            --rose-100: #ffe3e3;
+            --rose-200: #ffc9c9;
+            --crimson: #c1272d;
+            --crimson-dark: #9b1b20;
+            --crimson-deeper: #7a1518;
+            --crimson-light: #e74c52;
+            --crimson-glow: rgba(193,39,45,0.08);
+            --crimson-glow-md: rgba(193,39,45,0.12);
+            --navy: #1a1a2e;
+            --navy-light: #2d2d44;
+            --slate: #3d3d56;
+            --text: #2a2a3c;
+            --text-secondary: #6b6b80;
+            --text-muted: #9e9eb0;
+            --border: #ebebeb;
+            --border-light: #f2f2f2;
+            --teal: #0d9488;
+            --teal-bg: rgba(13,148,136,0.06);
+            --amber: #d97706;
+            --amber-bg: rgba(217,119,6,0.06);
+            --blue: #3b82f6;
+            --blue-bg: rgba(59,130,246,0.06);
+            --radius: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --radius-xs: 8px;
+            --shadow-subtle: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+            --shadow-card: 0 4px 24px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.03);
+            --shadow-elevated: 0 12px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-red: 0 8px 32px rgba(193,39,45,0.18);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(20px) saturate(1.6);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .header-inner {
+            max-width: 1140px; margin: 0 auto; padding: 0 32px;
+        }
+        .header-top {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 0 10px;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 14px; color: #fff;
+            box-shadow: var(--shadow-red);
+            letter-spacing: -0.5px;
+        }
+        .logo-text { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; }
+        .logo-text span { color: var(--crimson); }
+
+        .header-meta {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .header-badge {
+            font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--crimson);
+            background: var(--crimson-glow);
+            border: 1px solid var(--rose-200);
+            padding: 5px 14px; border-radius: 100px;
+        }
+
+        /* ===== TABS ===== */
+        .nav-tabs {
+            display: flex; gap: 2px;
+            overflow-x: auto; scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .nav-tab {
+            position: relative;
+            padding: 12px 20px; 
+            font-size: 13px; font-weight: 600;
+            font-family: inherit;
+            color: var(--text-muted);
+            background: none; border: none; cursor: pointer;
+            white-space: nowrap; transition: var(--transition);
+            border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+        }
+        .nav-tab:hover { color: var(--text); background: var(--crimson-glow); }
+        .nav-tab.active { color: var(--crimson); background: var(--crimson-glow); }
+        .nav-tab.active::after {
+            content: ''; position: absolute;
+            bottom: 0; left: 14px; right: 14px; height: 2.5px;
+            background: linear-gradient(90deg, var(--crimson), var(--crimson-light));
+            border-radius: 2px 2px 0 0;
+        }
+        .tab-badge {
+            display: inline-block;
+            font-size: 9px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+            padding: 2px 7px; border-radius: 5px; margin-left: 6px;
+            background: var(--border-light); color: var(--text-muted); vertical-align: middle;
+        }
+        .nav-tab.active .tab-badge { background: var(--rose-100); color: var(--crimson); }
+
+        /* ===== MAIN ===== */
+        .main {
+            max-width: 1140px; margin: 0 auto;
+            padding: 36px 32px 100px;
+        }
+        .tab-content { display: none; animation: fadeSlide 0.45s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO ===== */
+        .akad-hero {
+            position: relative;
+            border-radius: var(--radius);
+            padding: 48px 48px 44px;
+            margin-bottom: 28px;
+            overflow: hidden;
+            color: #fff;
+        }
+        .akad-hero.hero-crimson {
+            background: linear-gradient(135deg, var(--crimson-dark) 0%, var(--crimson) 40%, #e8565c 100%);
+        }
+        .akad-hero.hero-teal {
+            background: linear-gradient(135deg, #065f5b 0%, #0d9488 40%, #2dd4bf 100%);
+        }
+        .akad-hero.hero-navy {
+            background: linear-gradient(135deg, #0f1629 0%, #1e2a4a 40%, #3b5998 100%);
+        }
+        .akad-hero.hero-amber {
+            background: linear-gradient(135deg, #92400e 0%, #d97706 40%, #fbbf24 100%);
+        }
+
+        .hero-pattern {
+            position: absolute; inset: 0; z-index: 0; opacity: 0.07;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 40%);
+        }
+        .hero-dots {
+            position: absolute; inset: 0; z-index: 0; opacity: 0.06;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .hero-tag {
+            position: relative; z-index: 1;
+            display: inline-block;
+            font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+            color: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 16px; border-radius: 100px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .akad-hero h1 {
+            position: relative; z-index: 1;
+            font-size: 34px; font-weight: 800; letter-spacing: -0.8px;
+            margin-bottom: 12px;
+        }
+        .akad-hero .subtitle {
+            position: relative; z-index: 1;
+            font-size: 14px; opacity: 0.88; max-width: 640px; line-height: 1.75;
+        }
+
+        .hero-illustration {
+            position: absolute;
+            right: 36px; top: 50%; transform: translateY(-50%);
+            width: 180px; height: 180px;
+            object-fit: contain;
+            z-index: 2;
+            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+            animation: heroFloat 4s ease-in-out infinite;
+            border-radius: 16px;
+        }
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(calc(-50% - 10px)) translateX(3px); }
+        }
+        @media (max-width: 800px) {
+            .hero-illustration { width: 100px; height: 100px; right: 16px; }
+        }
+        @media (max-width: 520px) {
+            .hero-illustration { display: none; }
+        }
+
+        /* ===== CARDS ===== */
+        .section-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-subtle);
+            transition: var(--transition);
+        }
+        .section-card:hover { box-shadow: var(--shadow-card); }
+        .section-card h2 {
+            font-size: 17px; font-weight: 800; color: var(--navy);
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 4px;
+        }
+        .section-card h2 .icon {
+            width: 36px; height: 36px;
+            background: var(--crimson-glow-md);
+            border-radius: var(--radius-xs);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 17px; flex-shrink: 0;
+        }
+        .section-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+
+        /* ===== GRID ===== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        /* ===== INFO CARDS ===== */
+        .info-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            box-shadow: var(--shadow-subtle);
+            transition: var(--transition);
+        }
+        .info-card:hover { box-shadow: var(--shadow-card); transform: translateY(-2px); }
+        .info-card h3 {
+            font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+        }
+        .info-card h3 .dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+        }
+        .info-card.card-use h3 { color: var(--teal); }
+        .info-card.card-use h3 .dot { background: var(--teal); }
+        .info-card.card-use { border-top: 3px solid var(--teal); }
+
+        .info-card.card-adv h3 { color: var(--crimson); }
+        .info-card.card-adv h3 .dot { background: var(--crimson); }
+        .info-card.card-adv { border-top: 3px solid var(--crimson); }
+
+        .info-card ul { list-style: none; }
+        .info-card ul li {
+            font-size: 13px; color: var(--text-secondary);
+            padding: 6px 0 6px 22px; position: relative; line-height: 1.6;
+        }
+        .info-card.card-use ul li::before {
+            content: ''; position: absolute; left: 2px; top: 13px;
+            width: 10px; height: 10px; border-radius: 3px;
+            border: 2px solid var(--teal); background: var(--teal-bg);
+        }
+        .info-card.card-adv ul li::before {
+            content: '✓'; position: absolute; left: 0; top: 6px;
+            color: var(--crimson); font-weight: 800; font-size: 13px;
+        }
+
+        /* ===== FORMS ===== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+            gap: 16px; margin-bottom: 28px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+            text-transform: uppercase; color: var(--text-muted);
+        }
+        .form-group input, .form-group select {
+            padding: 12px 16px;
+            background: var(--bg-warm);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-xs);
+            font-size: 14px; font-weight: 600;
+            font-family: inherit; color: var(--text);
+            outline: none; transition: var(--transition);
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 4px var(--crimson-glow);
+            background: var(--white);
+        }
+        .form-group select { cursor: pointer; }
+
+        .btn-simulate {
+            padding: 12px 36px;
+            background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+            color: #fff; border: none;
+            border-radius: var(--radius-xs);
+            font-size: 13px; font-weight: 700;
+            font-family: inherit; cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(193,39,45,0.25);
+            align-self: flex-end;
+            letter-spacing: 0.3px;
+        }
+        .btn-simulate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(193,39,45,0.35);
+        }
+        .btn-simulate:active { transform: translateY(0); }
+
+        .action-buttons {
+            grid-column: 1 / -1; display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px;
+        }
+
+        /* ===== STATS ===== */
+        .stat-pills { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+        .stat-pill {
+            flex: 1; min-width: 155px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .stat-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+            text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+        }
+        .stat-value {
+            font-size: 21px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px;
+        }
+        .stat-value.crimson { color: var(--crimson); }
+        .stat-value.teal { color: var(--teal); }
+
+        /* ===== CHART ===== */
+        .chart-container {
+            position: relative; width: 100%; height: 370px;
+            margin: 20px 0;
+            background: var(--bg-warm);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ===== TABLE ===== */
+        .table-wrapper {
+            overflow: auto; max-height: 440px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        .table-wrapper::-webkit-scrollbar { width: 5px; height: 5px; }
+        .table-wrapper::-webkit-scrollbar-track { background: var(--bg-warm); }
+        .table-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .table-wrapper::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead { background: var(--navy); position: sticky; top: 0; z-index: 2; }
+        thead th {
+            padding: 14px 18px; font-weight: 700; text-align: right;
+            color: rgba(255,255,255,0.85); white-space: nowrap;
+            font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase;
+        }
+        thead th:first-child { text-align: center; border-radius: var(--radius-xs) 0 0 0; }
+        thead th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+
+        tbody tr { border-bottom: 1px solid var(--border-light); transition: var(--transition); }
+        tbody tr:nth-child(even) { background: var(--bg-warm); }
+        tbody tr:hover { background: var(--rose-50); }
+        tbody td {
+            padding: 11px 18px; text-align: right;
+            font-variant-numeric: tabular-nums; color: var(--text-secondary);
+            font-weight: 500;
+        }
+        tbody td:first-child {
+            text-align: center; font-weight: 700; color: var(--text-muted);
+            font-size: 12px;
+        }
+        tbody tr.row-total {
+            background: var(--crimson-glow); font-weight: 700;
+            position: sticky; bottom: 0;
+        }
+        tbody tr.row-total td {
+            color: var(--crimson-dark);
+            border-top: 2px solid var(--rose-200);
+            font-weight: 800;
+        }
+
+        .table-hint {
+            font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 10px;
+        }
+
+        /* ===== PELUNASAN ===== */
+        .pelunasan-box {
+            background: var(--navy);
+            border-radius: var(--radius);
+            padding: 36px;
+            color: #fff;
+            position: relative; overflow: hidden;
+            margin-top: 24px;
+            box-shadow: var(--shadow-elevated);
+        }
+        .pelunasan-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--crimson), var(--crimson-light), var(--amber));
+        }
+        .pelunasan-dots {
+            position: absolute; inset: 0; z-index: 0; opacity: 0.03;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .pelunasan-box h3 {
+            position: relative; z-index: 1;
+            font-size: 16px; font-weight: 800; margin-bottom: 14px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .pelunasan-box p {
+            position: relative; z-index: 1;
+            font-size: 13px; opacity: 0.75; margin-bottom: 16px; line-height: 1.8;
+        }
+        .pelunasan-box ul { position: relative; z-index: 1; list-style: none; }
+        .pelunasan-box ul li {
+            font-size: 13px; color: rgba(255,255,255,0.8);
+            padding: 6px 0 6px 26px; position: relative; line-height: 1.75;
+        }
+        .pelunasan-box ul li::before {
+            content: '→'; position: absolute; left: 0;
+            color: var(--crimson-light); font-weight: 800;
+        }
+        .pelunasan-box ul li strong { color: #fff; }
+
+        .tag-row { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+        .tag {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+            padding: 5px 14px; border-radius: 100px;
+            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center; padding: 48px 32px;
+            color: var(--text-muted); font-size: 12px;
+            border-top: 1px solid var(--border);
+            background: var(--white);
+        }
+        .footer strong { color: var(--crimson); }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 640px) {
+            .main { padding: 24px 16px 80px; }
+            .header-inner { padding: 0 16px; }
+            .akad-hero { padding: 32px 24px; }
+            .akad-hero h1 { font-size: 24px; }
+            .section-card { padding: 24px 20px; }
+            .form-grid { grid-template-columns: 1fr 1fr; }
+            .action-buttons { flex-direction: column; }
+            .btn-simulate { width: 100%; text-align: center; }
+            .stat-pills { gap: 8px; }
+            .stat-pill { min-width: 120px; padding: 14px; }
+            .stat-value { font-size: 17px; }
+            .nav-tab { padding: 10px 14px; font-size: 12px; }
+            .header-badge { display: none; }
+            .chart-container { height: 280px; padding: 12px; }
+            .pelunasan-box { padding: 28px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div class="header-top">
+            <div class="logo">
+                <div class="logo-icon">AS</div>
+                <div class="logo-text">Akad <span>Syariah</span></div>
+            </div>
+            <div class="header-meta">
+                <div class="header-badge">Panduan Interaktif</div>
+            </div>
+        </div>
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="murabahah" onclick="switchTab('murabahah')">Murabahah<span class="tab-badge">Jual Beli</span></button>
+            <button class="nav-tab" data-tab="mudharabah" onclick="switchTab('mudharabah')">Mudharabah<span class="tab-badge">Bagi Hasil</span></button>
+            <button class="nav-tab" data-tab="musyarakah" onclick="switchTab('musyarakah')">Musyarakah<span class="tab-badge">Kongsi</span></button>
+            <button class="nav-tab" data-tab="mmq" onclick="switchTab('mmq')">MMQ<span class="tab-badge">KPR</span></button>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+
+<!-- ==================== MURABAHAH ==================== -->
+<div class="tab-content active" id="tab-murabahah">
+    <div class="akad-hero hero-crimson">
+        <div class="hero-pattern"></div><div class="hero-dots"></div>
+        <img src="murabahah_icon.png" alt="Murabahah" class="hero-illustration">
+        <div class="hero-tag">Akad Jual Beli dengan Margin Tetap</div>
+        <h1>Murabahah</h1>
+        <p class="subtitle">Bank membeli barang yang dibutuhkan nasabah, lalu menjualnya kembali dengan margin keuntungan yang disepakati di awal. Angsuran bersifat tetap (fixed) selama masa pembiayaan.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:24px">
+        <div class="info-card card-use">
+            <h3><span class="dot"></span>Biasa Dipakai Untuk</h3>
+            <ul>
+                <li>Pembiayaan Investasi (mesin, kendaraan, ruko, alat berat)</li>
+                <li>Pembiayaan Modal Kerja (stok barang dagang, bahan baku)</li>
+                <li>KPR Syariah (pembelian rumah/properti)</li>
+                <li>Pembiayaan Konsumtif (kendaraan pribadi, elektronik)</li>
+            </ul>
+        </div>
+        <div class="info-card card-adv">
+            <h3><span class="dot"></span>Kelebihan Dibanding Akad Lain</h3>
+            <ul>
+                <li>Angsuran TETAP, kepastian cicilan per bulan</li>
+                <li>Tidak terpengaruh fluktuasi pasar atau kinerja usaha</li>
+                <li>Proses dan perhitungan sangat sederhana dan transparan</li>
+                <li>Cocok bagi nasabah yang menginginkan kepastian biaya</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-card">
+        <h2><span class="icon">📊</span> Simulator Angsuran Murabahah</h2>
+        <p class="section-desc">Masukkan parameter pembiayaan. Margin dihitung otomatis dari Efektif Rate p.a.</p>
+        <div class="form-grid">
+            <div class="form-group"><label>Harga Perolehan (Rp Ribuan)</label><input type="number" id="murb-harga" value="500000"></div>
+            <div class="form-group"><label>Uang Muka / DP (Rp Ribuan)</label><input type="number" id="murb-dp" value="0"></div>
+            <div class="form-group"><label>Efektif Rate p.a. (%)</label><input type="number" id="murb-rate" value="12" step="0.1" min="0.1"></div>
+            <div class="form-group"><label>Tenor (Bulan)</label><input type="number" id="murb-tenor" value="12" min="1" max="360"></div>
+            <div class="form-group"><label>Skema Angsuran</label>
+                <select id="murb-skema"><option value="efektif">Efektif (Margin Menurun)</option></select>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 16px rgba(16,185,129,0.25);" onclick="exportToExcel('murb-table', 'Simulasi_Murabahah')">Export Excel</button>
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 16px rgba(245,158,11,0.25);" onclick="exportChart('murb-chart', 'Grafik_Murabahah')">Export Grafik</button>
+                <button class="btn-simulate" onclick="simulateMurabahah()">Hitung Simulasi</button>
+            </div>
+        </div>
+        <div class="stat-pills" id="murb-stats"></div>
+        <div class="chart-container"><canvas id="murb-chart"></canvas></div>
+        <div class="table-wrapper"><table id="murb-table"><thead><tr><th>Bln</th><th>Angsuran Pokok</th><th>Angsuran Margin</th><th>Total Angsuran</th><th>Sisa Pokok</th></tr></thead><tbody></tbody></table></div>
+        <p class="table-hint">↕ Scroll untuk melihat seluruh data</p>
+    </div>
+    <div class="pelunasan-box">
+        <div class="pelunasan-dots"></div>
+        <h3>⚡ Pelunasan Sebelum Jatuh Tempo</h3>
+        <p>Dalam akad Murabahah, harga jual sudah bersifat tetap sejak akad ditandatangani:</p>
+        <ul>
+            <li><strong>Sisa pokok + sisa margin</strong> wajib dilunasi secara utuh sesuai akad awal.</li>
+            <li>Bank syariah <strong>boleh memberikan potongan (muqasah)</strong> atas margin yang belum jatuh tempo. Ini kebijakan bank, bukan hak nasabah.</li>
+            <li>Mengacu <strong>Fatwa DSN-MUI No. 23/DSN-MUI/III/2002</strong>, jika nasabah melunasi lebih cepat, LKS boleh memberikan potongan, dengan syarat tidak diperjanjikan di awal.</li>
+            <li>Biaya tambahan (penalti) <strong>umumnya tidak dikenakan</strong>, namun beberapa bank mengenakan biaya administrasi pelunasan.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Margin Fixed</span><span class="tag">Muqasah Opsional</span><span class="tag">No Penalty</span></div>
+    </div>
+</div>
+
+<!-- ==================== MUDHARABAH ==================== -->
+<div class="tab-content" id="tab-mudharabah">
+    <div class="akad-hero hero-teal">
+        <div class="hero-pattern"></div><div class="hero-dots"></div>
+        <img src="mudharabah_icon.png" alt="Mudharabah" class="hero-illustration">
+        <div class="hero-tag">Akad Bagi Hasil &mdash; 100% Modal Bank</div>
+        <h1>Mudharabah</h1>
+        <p class="subtitle">Bank menyediakan 100% modal, nasabah bertindak sebagai pengelola usaha. Keuntungan dibagi berdasarkan nisbah yang disepakati. Kerugian non-kelalaian ditanggung bank.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:24px">
+        <div class="info-card card-use">
+            <h3><span class="dot"></span>Biasa Dipakai Untuk</h3>
+            <ul>
+                <li>Pembiayaan Modal Kerja (perdagangan, proyek jangka pendek)</li>
+                <li>Cash Collateral / Cashcol (jaminan deposito)</li>
+                <li>Pembiayaan UMKM berbasis usaha produktif</li>
+                <li>Produk Tabungan & Deposito Syariah (sisi penghimpunan)</li>
+            </ul>
+        </div>
+        <div class="info-card card-adv">
+            <h3><span class="dot"></span>Kelebihan Dibanding Akad Lain</h3>
+            <ul>
+                <li>Nasabah tidak perlu menyertakan modal, cukup keahlian</li>
+                <li>Risiko kerugian finansial ditanggung bank (bukan kelalaian)</li>
+                <li>Angsuran fleksibel mengikuti kinerja usaha riil</li>
+                <li>Cocok untuk usaha baru yang belum punya modal sendiri</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-card">
+        <h2><span class="icon">📊</span> Simulator Bagi Hasil Mudharabah</h2>
+        <p class="section-desc">Nisbah bank dihitung otomatis dari Expected Profit Rate agar equiv. rate mendekati target.</p>
+        <div class="form-grid">
+            <div class="form-group"><label>Pembiayaan Bank (Rp Ribuan)</label><input type="number" id="mudh-modal" value="500000"></div>
+            <div class="form-group"><label>Expected Profit Rate p.a. (%)</label><input type="number" id="mudh-rate" value="12" step="0.1"></div>
+            <div class="form-group"><label>Proyeksi Pendapatan/Bln (Rp Ribuan)</label><input type="number" id="mudh-revenue" value="80000"></div>
+            <div class="form-group"><label>Tenor (Bulan)</label><input type="number" id="mudh-tenor" value="12" min="1"></div>
+            <div class="form-group"><label>Skema Pengembalian Pokok</label>
+                <select id="mudh-skema"><option value="endofterm">End of Term (Akhir Periode)</option><option value="aflopend">Aflopend (Pokok Menurun)</option></select>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 16px rgba(16,185,129,0.25);" onclick="exportToExcel('mudh-table', 'Simulasi_Mudharabah')">Export Excel</button>
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 16px rgba(245,158,11,0.25);" onclick="exportChart('mudh-chart', 'Grafik_Mudharabah')">Export Grafik</button>
+                <button class="btn-simulate" onclick="simulateMudharabah()">Hitung Simulasi</button>
+            </div>
+        </div>
+        <div class="stat-pills" id="mudh-stats"></div>
+        <div class="chart-container"><canvas id="mudh-chart"></canvas></div>
+        <div class="table-wrapper"><table id="mudh-table"><thead><tr><th>Bln</th><th>Proyeksi Pendapatan</th><th>Bagi Hasil Bank</th><th>Bagi Hasil Nasabah</th><th>Angsuran Pokok</th><th>Total Bayar</th></tr></thead><tbody></tbody></table></div>
+        <p class="table-hint">↕ Scroll untuk melihat seluruh data</p>
+    </div>
+    <div class="pelunasan-box">
+        <div class="pelunasan-dots"></div>
+        <h3>⚡ Pelunasan Sebelum Jatuh Tempo</h3>
+        <p>Pelunasan dipercepat dalam Mudharabah relatif lebih sederhana:</p>
+        <ul>
+            <li>Nasabah cukup mengembalikan <strong>sisa pokok pembiayaan</strong> yang belum dikembalikan.</li>
+            <li>Bagi hasil hanya dihitung sampai bulan terakhir usaha berjalan, <strong>tidak ada margin sisa</strong>.</li>
+            <li>Bank <strong>tidak berhak mengenakan penalti</strong>, karena tidak ada margin tetap.</li>
+            <li>Biaya administrasi pelunasan mungkin tetap dikenakan sesuai kebijakan bank.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Bagi Hasil Berhenti</span><span class="tag">Bayar Sisa Pokok</span><span class="tag">No Penalty</span></div>
+    </div>
+</div>
+
+<!-- ==================== MUSYARAKAH ==================== -->
+<div class="tab-content" id="tab-musyarakah">
+    <div class="akad-hero hero-navy">
+        <div class="hero-pattern"></div><div class="hero-dots"></div>
+        <img src="musyarakah_icon.png" alt="Musyarakah" class="hero-illustration">
+        <div class="hero-tag">Akad Kongsi / Patungan Modal</div>
+        <h1>Musyarakah</h1>
+        <p class="subtitle">Bank dan nasabah sama-sama menyetorkan modal. Keuntungan dibagi sesuai nisbah, kerugian ditanggung proporsional sesuai porsi modal masing-masing.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:24px">
+        <div class="info-card card-use">
+            <h3><span class="dot"></span>Biasa Dipakai Untuk</h3>
+            <ul>
+                <li>Pembiayaan Modal Kerja (distribusi, manufaktur)</li>
+                <li>Pembiayaan Proyek (konstruksi, tender pemerintah)</li>
+                <li>Pembiayaan Investasi (pengembangan usaha, ekspansi)</li>
+                <li>Sindikasi pembiayaan (bank + bank atau bank + investor)</li>
+            </ul>
+        </div>
+        <div class="info-card card-adv">
+            <h3><span class="dot"></span>Kelebihan Dibanding Akad Lain</h3>
+            <ul>
+                <li>Beban modal lebih ringan karena patungan bersama bank</li>
+                <li>Nisbah bagi hasil fleksibel (bisa beda dari proporsi modal)</li>
+                <li>Risiko kerugian ditanggung bersama secara proporsional</li>
+                <li>Cocok untuk nasabah yang sudah punya sebagian modal</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-card">
+        <h2><span class="icon">📊</span> Simulator Musyarakah</h2>
+        <p class="section-desc">Simulasikan proyeksi bagi hasil dan angsuran pokok dengan patungan modal.</p>
+        <div class="form-grid">
+            <div class="form-group"><label>Total Plafon Usaha (Rp Ribuan)</label><input type="number" id="musy-total" value="500000"></div>
+            <div class="form-group"><label>Porsi Modal Nasabah</label>
+                <select id="musy-nasabah-pct"><option value="30">30% dari Total Plafon</option><option value="20">20% dari Total Plafon</option></select>
+            </div>
+            <div class="form-group"><label>Expected Profit Rate p.a. (%)</label><input type="number" id="musy-rate" value="12" step="0.1"></div>
+            <div class="form-group"><label>Proyeksi Pendapatan/Bln (Rp Ribuan)</label><input type="number" id="musy-revenue" value="100000"></div>
+            <div class="form-group"><label>Tenor (Bulan)</label><input type="number" id="musy-tenor" value="12" min="1"></div>
+            <div class="form-group"><label>Skema Pengembalian Pokok</label>
+                <select id="musy-skema"><option value="efektif">Efektif (Pokok Menurun)</option></select>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 16px rgba(16,185,129,0.25);" onclick="exportToExcel('musy-table', 'Simulasi_Musyarakah')">Export Excel</button>
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 16px rgba(245,158,11,0.25);" onclick="exportChart('musy-chart', 'Grafik_Musyarakah')">Export Grafik</button>
+                <button class="btn-simulate" onclick="simulateMusyarakah()">Hitung Simulasi</button>
+            </div>
+        </div>
+        <div class="stat-pills" id="musy-stats"></div>
+        <div class="chart-container"><canvas id="musy-chart"></canvas></div>
+        <div class="table-wrapper"><table id="musy-table"><thead><tr><th>Bln</th><th>Proyeksi Pendapatan</th><th>Bagi Hasil Bank</th><th>Angsuran Pokok</th><th>Total Bayar</th><th>Sisa Pokok Bank</th></tr></thead><tbody></tbody></table></div>
+        <p class="table-hint">↕ Scroll untuk melihat seluruh data</p>
+    </div>
+    <div class="pelunasan-box">
+        <div class="pelunasan-dots"></div>
+        <h3>⚡ Pelunasan Sebelum Jatuh Tempo</h3>
+        <p>Pelunasan dipercepat berarti nasabah membeli kembali porsi bank sebelum waktunya:</p>
+        <ul>
+            <li>Nasabah mengembalikan <strong>sisa pokok porsi modal bank</strong> yang belum dikembalikan.</li>
+            <li>Bagi hasil hanya dihitung <strong>sampai bulan berjalan</strong>, tidak ada kewajiban bulan sisa.</li>
+            <li>Bank umumnya <strong>tidak mengenakan penalti</strong>, karena tidak ada margin tetap.</li>
+            <li>Setelah pokok bank dikembalikan penuh, usaha menjadi <strong>100% milik nasabah</strong>.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Bagi Hasil Berhenti</span><span class="tag">Bayar Sisa Porsi Bank</span><span class="tag">No Penalty</span></div>
+    </div>
+</div>
+
+<!-- ==================== MMQ ==================== -->
+<div class="tab-content" id="tab-mmq">
+    <div class="akad-hero hero-amber">
+        <div class="hero-pattern"></div><div class="hero-dots"></div>
+        <img src="mmq_icon.png" alt="MMQ" class="hero-illustration">
+        <div class="hero-tag">Kongsi Berkurang + Sewa (Ijarah)</div>
+        <h1>Musyarakah Mutanaqishah (MMQ)</h1>
+        <p class="subtitle">Bank dan nasabah patungan membeli aset. Aset disewakan ke nasabah, yang mencicil porsi bank secara bertahap sampai aset sepenuhnya milik nasabah. Sewa menurun seiring kepemilikan bank berkurang.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:24px">
+        <div class="info-card card-use">
+            <h3><span class="dot"></span>Biasa Dipakai Untuk</h3>
+            <ul>
+                <li>KPR Syariah / Pembiayaan Rumah (paling umum)</li>
+                <li>Pembiayaan Properti Komersial (ruko, gudang, kantor)</li>
+                <li>Pembiayaan Investasi Aset Besar (pabrik, mesin)</li>
+                <li>Refinancing / Take Over aset yang sudah dimiliki</li>
+            </ul>
+        </div>
+        <div class="info-card card-adv">
+            <h3><span class="dot"></span>Kelebihan Dibanding Akad Lain</h3>
+            <ul>
+                <li>Ujrah (sewa) bisa di-review periodik, lebih adil</li>
+                <li>Nasabah bertahap menjadi pemilik penuh aset</li>
+                <li>Biaya sewa menurun seiring meningkatnya kepemilikan</li>
+                <li>Lebih fleksibel dibanding Murabahah untuk jangka panjang</li>
+            </ul>
+        </div>
+    </div>
+    <div class="section-card">
+        <h2><span class="icon">📊</span> Simulator Angsuran MMQ</h2>
+        <p class="section-desc">Ujrah dihitung dari sisa hishshah bank dikalikan efektif rate bulanan, menurun setiap bulan.</p>
+        <div class="form-grid">
+            <div class="form-group"><label>Harga Aset (Rp Ribuan)</label><input type="number" id="mmq-harga" value="500000"></div>
+            <div class="form-group"><label>Porsi Nasabah / DP (Rp Ribuan)</label><input type="number" id="mmq-dp" value="100000"></div>
+            <div class="form-group"><label>Efektif Rate p.a. (%)</label><input type="number" id="mmq-rate" value="12" step="0.1"></div>
+            <div class="form-group"><label>Tenor (Bulan)</label><input type="number" id="mmq-tenor" value="12" min="1" max="360"></div>
+            <div class="action-buttons">
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 16px rgba(16,185,129,0.25);" onclick="exportToExcel('mmq-table', 'Simulasi_MMQ')">Export Excel</button>
+                <button class="btn-simulate" style="background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 16px rgba(245,158,11,0.25);" onclick="exportChart('mmq-chart', 'Grafik_MMQ')">Export Grafik</button>
+                <button class="btn-simulate" onclick="simulateMMQ()">Hitung Simulasi</button>
+            </div>
+        </div>
+        <div class="stat-pills" id="mmq-stats"></div>
+        <div class="chart-container"><canvas id="mmq-chart"></canvas></div>
+        <div class="table-wrapper"><table id="mmq-table"><thead><tr><th>Bln</th><th>Hishshah Bank</th><th>% Bank</th><th>Ujrah (Sewa)</th><th>Angsuran Pokok</th><th>Total Bayar</th></tr></thead><tbody></tbody></table></div>
+        <p class="table-hint">↕ Scroll untuk melihat seluruh data</p>
+    </div>
+    <div class="pelunasan-box">
+        <div class="pelunasan-dots"></div>
+        <h3>⚡ Pelunasan Sebelum Jatuh Tempo</h3>
+        <p>Pelunasan dipercepat di MMQ artinya membeli seluruh sisa porsi bank sekaligus:</p>
+        <ul>
+            <li>Nasabah membayar <strong>sisa hishshah bank</strong> (porsi kepemilikan yang belum dibeli).</li>
+            <li>Ujrah (sewa) otomatis <strong>berhenti</strong> karena aset sudah 100% milik nasabah.</li>
+            <li>Tidak ada kewajiban membayar ujrah sisa bulan yang belum jatuh tempo.</li>
+            <li>Bank umumnya <strong>tidak mengenakan penalti</strong>, biaya administrasi bisa berlaku.</li>
+            <li>MMQ <strong>lebih menguntungkan untuk pelunasan dipercepat</strong> dibanding Murabahah.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Sewa Berhenti</span><span class="tag">Bayar Sisa Hishshah</span><span class="tag">No Penalty</span><span class="tag">Paling Fleksibel</span></div>
+    </div>
+</div>
+
+</main>
+
+<footer class="footer">
+    <p>Panduan Akad Pembiayaan Syariah &mdash; <strong>Media Edukasi Internal</strong></p>
+    <p style="margin-top:4px;opacity:0.6">Referensi: Fatwa DSN-MUI, POJK, dan Standar Akuntansi Syariah (PSAK).</p>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+const fmt = n => new Intl.NumberFormat('id-ID').format(Math.round(n));
+const fmtRp = n => 'Rp ' + fmt(n);
+let charts = {};
+
+function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+function switchTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelector(`.nav-tab[data-tab="${tab}"]`).classList.add('active');
+}
+
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+
+const chartOpts = (colors) => ({
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+        legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'circle', padding: 20, font: { size: 11, weight: 600 }, color: '#6b6b80' } },
+        tooltip: {
+            backgroundColor: '#1a1a2e', titleColor: '#fff', bodyColor: '#ccc',
+            borderColor: '#333', borderWidth: 1, padding: 12, cornerRadius: 8,
+            callbacks: { label: ctx => ctx.dataset.label + ': ' + fmtRp(ctx.raw) }
+        }
+    },
+    scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#9e9eb0' } },
+        y: { stacked: true, grid: { color: '#f0f0f0' }, ticks: { callback: v => 'Rp ' + fmt(v), font: { size: 10 }, color: '#9e9eb0' } }
+    }
+});
+
+function exportToExcel(tableId, filename) {
+    if(typeof XLSX === 'undefined') {
+        alert('Library Excel belum dimuat. Silakan periksa koneksi internet Anda.');
+        return;
+    }
+    const table = document.getElementById(tableId);
+    const wb = XLSX.utils.table_to_book(table, {sheet: "Simulasi"});
+    XLSX.writeFile(wb, filename + ".xlsx");
+}
+
+function exportChart(chartId, filename) {
+    const canvas = document.getElementById(chartId);
+    if(canvas) {
+        const tmpCanvas = document.createElement('canvas');
+        tmpCanvas.width = canvas.width;
+        tmpCanvas.height = canvas.height;
+        const tmpCtx = tmpCanvas.getContext('2d');
+        tmpCtx.fillStyle = '#faf9f6';
+        tmpCtx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+        tmpCtx.drawImage(canvas, 0, 0);
+        const a = document.createElement('a');
+        a.href = tmpCanvas.toDataURL('image/png');
+        a.download = filename + ".png";
+        a.click();
+    }
+}
+
+// ===== 1. MURABAHAH =====
+function simulateMurabahah() {
+    const harga = +document.getElementById('murb-harga').value * 1000;
+    const dp = +document.getElementById('murb-dp').value * 1000;
+    const rate = +document.getElementById('murb-rate').value / 100;
+    const tenor = +document.getElementById('murb-tenor').value;
+    const pokok = harga - dp;
+
+    let rows = [], labels = [], dP = [], dM = [];
+    let sisaPokok = pokok;
+
+    for (let i = 1; i <= tenor; i++) {
+        const angPokok = pokok / tenor;
+        const angMargin = sisaPokok * (rate / 12);
+        sisaPokok -= angPokok;
+        if (sisaPokok < 1) sisaPokok = 0;
+        rows.push({ b: i, angPokok, angMargin, total: angPokok + angMargin, sisaPokok });
+        labels.push(i); dP.push(Math.round(angPokok)); dM.push(Math.round(angMargin));
+    }
+
+    const totM = rows.reduce((s, r) => s + r.angMargin, 0);
+    const totAll = rows.reduce((s, r) => s + r.total, 0);
+    document.getElementById('murb-stats').innerHTML = `
+        <div class="stat-pill"><div class="stat-label">Pokok Pembiayaan</div><div class="stat-value">${fmtRp(pokok)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Total Margin</div><div class="stat-value crimson">${fmtRp(totM)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Total Kewajiban</div><div class="stat-value">${fmtRp(totAll)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Efektif Rate</div><div class="stat-value teal">${(rate*100).toFixed(1)}% p.a.</div></div>`;
+
+    const tbody = document.querySelector('#murb-table tbody');
+    tbody.innerHTML = rows.map(r => `<tr><td>${r.b}</td><td>${fmtRp(r.angPokok)}</td><td>${fmtRp(r.angMargin)}</td><td>${fmtRp(r.total)}</td><td>${fmtRp(r.sisaPokok)}</td></tr>`).join('')
+        + `<tr class="row-total"><td>Total</td><td>${fmtRp(pokok)}</td><td>${fmtRp(totM)}</td><td>${fmtRp(totAll)}</td><td>-</td></tr>`;
+
+    destroyChart('murb');
+    charts['murb'] = new Chart(document.getElementById('murb-chart'), {
+        type: 'bar', data: { labels,
+            datasets: [
+                { label: 'Pokok', data: dP, backgroundColor: '#c1272d', borderRadius: 4, barPercentage: 0.65 },
+                { label: 'Margin', data: dM, backgroundColor: '#fca5a5', borderRadius: 4, barPercentage: 0.65 }
+            ]
+        }, options: chartOpts()
+    });
+}
+
+// ===== 2. MUDHARABAH =====
+function simulateMudharabah() {
+    const modal = +document.getElementById('mudh-modal').value * 1000;
+    const rate = +document.getElementById('mudh-rate').value / 100;
+    const revenue = +document.getElementById('mudh-revenue').value * 1000;
+    const tenor = +document.getElementById('mudh-tenor').value;
+    const skema = document.getElementById('mudh-skema').value;
+
+    const expectedBH = modal * (rate / 12);
+    const nisbahBank = Math.min(expectedBH / revenue, 0.99);
+
+    let rows = [], labels = [], dBH = [], dPokok = [];
+    let sisaPokok = modal;
+    let seed = 42;
+    function sr() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+    for (let i = 1; i <= tenor; i++) {
+        const rev = revenue * (0.88 + sr() * 0.24);
+        const bhBank = rev * nisbahBank;
+        const bhNasabah = rev * (1 - nisbahBank);
+        let angPokok = 0;
+        if (skema === 'aflopend') angPokok = modal / tenor;
+        else if (i === tenor) angPokok = sisaPokok;
+        sisaPokok -= angPokok; if (sisaPokok < 1) sisaPokok = 0;
+        rows.push({ b: i, rev, bhBank, bhNasabah, angPokok, total: bhBank + angPokok });
+        labels.push(i); dBH.push(Math.round(bhBank)); dPokok.push(Math.round(angPokok));
+    }
+
+    const totBH = rows.reduce((s, r) => s + r.bhBank, 0);
+    document.getElementById('mudh-stats').innerHTML = `
+        <div class="stat-pill"><div class="stat-label">Modal Bank</div><div class="stat-value">${fmtRp(modal)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Nisbah Bank</div><div class="stat-value crimson">${(nisbahBank*100).toFixed(1)}%</div></div>
+        <div class="stat-pill"><div class="stat-label">Total Bagi Hasil Bank</div><div class="stat-value">${fmtRp(totBH)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Equiv. Rate</div><div class="stat-value teal">${((totBH/modal/(tenor/12))*100).toFixed(1)}% p.a.</div></div>`;
+
+    const tbody = document.querySelector('#mudh-table tbody');
+    tbody.innerHTML = rows.map(r => `<tr><td>${r.b}</td><td>${fmtRp(r.rev)}</td><td>${fmtRp(r.bhBank)}</td><td>${fmtRp(r.bhNasabah)}</td><td>${fmtRp(r.angPokok)}</td><td>${fmtRp(r.total)}</td></tr>`).join('');
+
+    destroyChart('mudh');
+    charts['mudh'] = new Chart(document.getElementById('mudh-chart'), {
+        type: 'bar', data: { labels,
+            datasets: [
+                { label: 'Bagi Hasil Bank', data: dBH, backgroundColor: '#0d9488', borderRadius: 4, barPercentage: 0.65 },
+                { label: 'Angsuran Pokok', data: dPokok, backgroundColor: '#99f6e4', borderRadius: 4, barPercentage: 0.65 }
+            ]
+        }, options: chartOpts()
+    });
+}
+
+// ===== 3. MUSYARAKAH =====
+function simulateMusyarakah() {
+    const total = +document.getElementById('musy-total').value * 1000;
+    const nasabahPct = +document.getElementById('musy-nasabah-pct').value / 100;
+    const nasabah = total * nasabahPct;
+    const bank = total - nasabah;
+    const rate = +document.getElementById('musy-rate').value / 100;
+    const revenue = +document.getElementById('musy-revenue').value * 1000;
+    const tenor = +document.getElementById('musy-tenor').value;
+
+    const expectedBH = bank * (rate / 12);
+    const nisbahBank = Math.min(expectedBH / revenue, 0.99);
+
+    let rows = [], labels = [], dBH = [], dPokok = [];
+    let sisaPokok = bank;
+    let seed = 77;
+    function sr() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+    for (let i = 1; i <= tenor; i++) {
+        const rev = revenue * (0.88 + sr() * 0.24);
+        const bhBank = rev * nisbahBank;
+        const angPokok = bank / tenor;
+        sisaPokok -= angPokok; if (sisaPokok < 1) sisaPokok = 0;
+        rows.push({ b: i, rev, bhBank, angPokok, total: bhBank + angPokok, sisaPokok });
+        labels.push(i); dBH.push(Math.round(bhBank)); dPokok.push(Math.round(angPokok));
+    }
+
+    const totBH = rows.reduce((s, r) => s + r.bhBank, 0);
+    document.getElementById('musy-stats').innerHTML = `
+        <div class="stat-pill"><div class="stat-label">Modal Bank</div><div class="stat-value">${fmtRp(bank)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Modal Nasabah</div><div class="stat-value">${fmtRp(nasabah)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Nisbah Bank</div><div class="stat-value crimson">${(nisbahBank*100).toFixed(1)}%</div></div>
+        <div class="stat-pill"><div class="stat-label">Equiv. Rate</div><div class="stat-value teal">${((totBH/bank/(tenor/12))*100).toFixed(1)}% p.a.</div></div>`;
+
+    const tbody = document.querySelector('#musy-table tbody');
+    tbody.innerHTML = rows.map(r => `<tr><td>${r.b}</td><td>${fmtRp(r.rev)}</td><td>${fmtRp(r.bhBank)}</td><td>${fmtRp(r.angPokok)}</td><td>${fmtRp(r.total)}</td><td>${fmtRp(r.sisaPokok)}</td></tr>`).join('');
+
+    destroyChart('musy');
+    charts['musy'] = new Chart(document.getElementById('musy-chart'), {
+        type: 'bar', data: { labels,
+            datasets: [
+                { label: 'Bagi Hasil Bank', data: dBH, backgroundColor: '#3b5998', borderRadius: 4, barPercentage: 0.65 },
+                { label: 'Angsuran Pokok', data: dPokok, backgroundColor: '#bfdbfe', borderRadius: 4, barPercentage: 0.65 }
+            ]
+        }, options: chartOpts()
+    });
+}
+
+// ===== 4. MMQ =====
+function simulateMMQ() {
+    const harga = +document.getElementById('mmq-harga').value * 1000;
+    const dp = +document.getElementById('mmq-dp').value * 1000;
+    const rate = +document.getElementById('mmq-rate').value / 100;
+    const tenor = +document.getElementById('mmq-tenor').value;
+    const porsiBank = harga - dp;
+    const angPokok = porsiBank / tenor;
+
+    let rows = [], labels = [], dUjrah = [], dPokok = [];
+    let sisaBank = porsiBank;
+
+    for (let i = 1; i <= tenor; i++) {
+        const pctBank = sisaBank / harga;
+        const ujrah = sisaBank * (rate / 12);
+        const totalBayar = ujrah + angPokok;
+        rows.push({ b: i, sisaBank, pctBank, ujrah, angPokok, totalBayar });
+        labels.push(i); dUjrah.push(Math.round(ujrah)); dPokok.push(Math.round(angPokok));
+        sisaBank -= angPokok; if (sisaBank < 1) sisaBank = 0;
+    }
+
+    const totUjrah = rows.reduce((s, r) => s + r.ujrah, 0);
+    document.getElementById('mmq-stats').innerHTML = `
+        <div class="stat-pill"><div class="stat-label">Porsi Bank (Hishshah)</div><div class="stat-value">${fmtRp(porsiBank)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Porsi Nasabah (DP)</div><div class="stat-value">${fmtRp(dp)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Total Ujrah</div><div class="stat-value crimson">${fmtRp(totUjrah)}</div></div>
+        <div class="stat-pill"><div class="stat-label">Efektif Rate</div><div class="stat-value teal">${(rate*100).toFixed(1)}% p.a.</div></div>`;
+
+    const tbody = document.querySelector('#mmq-table tbody');
+    tbody.innerHTML = rows.map(r => `<tr><td>${r.b}</td><td>${fmtRp(r.sisaBank)}</td><td>${(r.pctBank*100).toFixed(1)}%</td><td>${fmtRp(r.ujrah)}</td><td>${fmtRp(r.angPokok)}</td><td>${fmtRp(r.totalBayar)}</td></tr>`).join('');
+
+    destroyChart('mmq');
+    charts['mmq'] = new Chart(document.getElementById('mmq-chart'), {
+        type: 'bar', data: { labels,
+            datasets: [
+                { label: 'Ujrah (Sewa)', data: dUjrah, backgroundColor: '#d97706', borderRadius: 4, barPercentage: 0.65 },
+                { label: 'Angsuran Pokok', data: dPokok, backgroundColor: '#fde68a', borderRadius: 4, barPercentage: 0.65 }
+            ]
+        }, options: chartOpts()
+    });
+}
+
+// ===== INIT =====
+window.addEventListener('DOMContentLoaded', () => {
+    simulateMurabahah(); simulateMudharabah(); simulateMusyarakah(); simulateMMQ();
+});
+</script>
+</body>
+</html>
