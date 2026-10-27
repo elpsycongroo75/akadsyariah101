@@ -9,12 +9,15 @@ class AkadApp {
   constructor() {
     this.currentMode = 'kmk'; // 'kmk' or 'ki'
     this.scene = null;
+    this.currentStep = 1;
+    this.autoPlayTimer = null;
     this.init();
   }
 
   init() {
     this.scene = new Sharia3DScene('canvas3d');
     this.bindTabEvents();
+    this.initStepPlayer();
     this.renderCurrentMode();
     this.renderComparisonMatrix();
     this.bindCalculatorEvents();
@@ -41,6 +44,7 @@ class AkadApp {
 
   switchMode(mode) {
     this.currentMode = mode;
+    this.stopAutoPlay();
     this.scene.setMode(mode === 'kmk' ? 'kmk' : 'mmq');
 
     anime({
@@ -60,6 +64,78 @@ class AkadApp {
         });
       }
     });
+  }
+
+  initStepPlayer() {
+    const buttons = document.querySelectorAll('.step-pill-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const step = parseInt(btn.getAttribute('data-step'), 10);
+        this.setStep(step);
+        this.stopAutoPlay();
+      });
+    });
+
+    const btnAutoPlay = document.getElementById('btnAutoPlay');
+    if (btnAutoPlay) {
+      btnAutoPlay.addEventListener('click', () => {
+        if (this.autoPlayTimer) {
+          this.stopAutoPlay();
+        } else {
+          this.startAutoPlay();
+        }
+      });
+    }
+  }
+
+  setStep(step) {
+    this.currentStep = step;
+    if (this.scene) {
+      this.scene.highlightStep(step);
+    }
+
+    const buttons = document.querySelectorAll('.step-pill-btn');
+    buttons.forEach(btn => {
+      const s = parseInt(btn.getAttribute('data-step'), 10);
+      btn.classList.toggle('active', s === step);
+    });
+
+    const data = this.currentMode === 'kmk' ? AKAD_DATA.kmk : AKAD_DATA.ki;
+    const stepData = data.lifecycleSteps[step - 1];
+
+    if (stepData) {
+      const indicator = document.getElementById('stepActiveIndicator');
+      if (indicator) indicator.textContent = `Tahap ${step}: ${stepData.title}`;
+
+      const callout = document.getElementById('stepCalloutText');
+      if (callout) {
+        callout.innerHTML = `<strong>${stepData.actor}:</strong> ${stepData.desc}`;
+      }
+    }
+  }
+
+  startAutoPlay() {
+    const btn = document.getElementById('btnAutoPlay');
+    const label = document.getElementById('autoPlayLabel');
+    if (btn) btn.classList.add('playing');
+    if (label) label.textContent = 'Jeda Auto-Play';
+
+    this.autoPlayTimer = setInterval(() => {
+      let next = this.currentStep + 1;
+      if (next > 6) next = 1;
+      this.setStep(next);
+    }, 3200);
+  }
+
+  stopAutoPlay() {
+    if (this.autoPlayTimer) {
+      clearInterval(this.autoPlayTimer);
+      this.autoPlayTimer = null;
+    }
+    const btn = document.getElementById('btnAutoPlay');
+    const label = document.getElementById('autoPlayLabel');
+    if (btn) btn.classList.remove('playing');
+    if (label) label.textContent = 'Auto-Play Alur';
   }
 
   renderCurrentMode() {
@@ -143,6 +219,18 @@ class AkadApp {
       `;
       riskBox.appendChild(div);
     });
+
+    // Update Step Pill Buttons Text
+    const kmkStepLabels = ['1. SPK Kontrak', '2. Akad Line', '3. Cair Promes', '4. Proyek Fisik', '5. Termin Escrow', '6. Auto-Debet'];
+    const mmqStepLabels = ['1. Appraisal Aset', '2. Akad MMQ', '3. Beli ke Vendor', '4. Operasi Aset', '5. Angsuran Ujrah', '6. Tamlik 100%'];
+    const activeLabels = this.currentMode === 'kmk' ? kmkStepLabels : mmqStepLabels;
+    const stepBtns = document.querySelectorAll('.step-pill-btn');
+    stepBtns.forEach((btn, idx) => {
+      if (activeLabels[idx]) btn.textContent = activeLabels[idx];
+    });
+
+    this.setStep(1);
+    this.renderSchematic();
 
     // Switch Calculator View
     if (this.currentMode === 'kmk') {
@@ -270,6 +358,95 @@ class AkadApp {
       `;
       tbody.appendChild(tr);
     });
+  }
+
+  renderSchematic() {
+    const grid = document.getElementById('schematicGrid');
+    const flowRow = document.getElementById('schematicFlowRow');
+    const subtitle = document.getElementById('schematicSubtitle');
+    if (!grid || !flowRow) return;
+
+    if (this.currentMode === 'kmk') {
+      if (subtitle) subtitle.textContent = 'Pemetaan 4 Pihak & Arus Kas Rekening Escrow Ring-Fencing';
+
+      grid.innerHTML = `
+        <div class="schematic-node node-bouwheer">
+          <div class="schematic-node-icon" style="background: #e0f2fe; color: #0284c7;">🏢</div>
+          <div class="schematic-node-title">Bouwheer</div>
+          <div class="schematic-node-role">Pemberi Kerja / Pemilik Proyek (Penerbit SPK & Pembayar Termin Resmi)</div>
+        </div>
+        <div class="schematic-node node-nasabah">
+          <div class="schematic-node-icon" style="background: #fef9c3; color: #b45309;">👷‍♂️</div>
+          <div class="schematic-node-title">Nasabah (Kontraktor)</div>
+          <div class="schematic-node-role">Mitra Pelaksana Kerja (Penyedia Self-Financing Modal Sendiri 20-30%)</div>
+        </div>
+        <div class="schematic-node node-bank">
+          <div class="schematic-node-icon" style="background: #dcfce7; color: #085f3b;">🏛️</div>
+          <div class="schematic-node-title">Bank Syariah</div>
+          <div class="schematic-node-role">Shohibul Maal / Penyedia Plafon Line Facility Musyarakah (70-80%)</div>
+        </div>
+        <div class="schematic-node node-escrow">
+          <div class="schematic-node-icon" style="background: #e0e7ff; color: #4338ca;">🔒</div>
+          <div class="schematic-node-title">Rekening Escrow</div>
+          <div class="schematic-node-role">Penampung Khusus Berdaya Blokir: Split Pokok, Nisbah Bagi Hasil, & Laba</div>
+        </div>
+      `;
+
+      flowRow.innerHTML = `
+        <div class="flow-connector-card">
+          <strong>1. Penarikan Promes ke Escrow</strong>
+          Bank mencairkan porsi modal kerja bertahap per Surat Sanggup (Promes) ke Rekening Escrow sesuai kebutuhan riil belanja proyek.
+        </div>
+        <div class="flow-connector-card">
+          <strong>2. Pelaksanaan Proyek Fisik</strong>
+          Nasabah mengerjakan fisik proyek sesuai kurva S dan diverifikasi berkala oleh tim monitoring lapangan bank syariah.
+        </div>
+        <div class="flow-connector-card">
+          <strong>3. Auto-Debet Termin Bouwheer</strong>
+          Termin Bouwheer wajib masuk ke Escrow. Bank mendebet otomatis pokok promes & bagi hasil, sisa laba proyek cair ke nasabah.
+        </div>
+      `;
+    } else {
+      if (subtitle) subtitle.textContent = 'Pemetaan Kepemilikan Bersama (Syirkah Al-Mulk), Sewa (Ijarah), & Pengalihan Hak (Tamlik)';
+
+      grid.innerHTML = `
+        <div class="schematic-node node-bank">
+          <div class="schematic-node-icon" style="background: #dcfce7; color: #085f3b;">🏛️</div>
+          <div class="schematic-node-title">Bank Syariah</div>
+          <div class="schematic-node-role">Pemilik Hishshah Awal (80%), Pemberi Sewa (Mu'jir), & Penerima Ujrah</div>
+        </div>
+        <div class="schematic-node node-nasabah">
+          <div class="schematic-node-icon" style="background: #fef9c3; color: #b45309;">🏭</div>
+          <div class="schematic-node-title">Nasabah Industri</div>
+          <div class="schematic-node-role">Pemodal Awal (DP 20%), Penyewa (Musta'jir), & Pembeli Bertahap</div>
+        </div>
+        <div class="schematic-node node-bouwheer">
+          <div class="schematic-node-icon" style="background: #e0f2fe; color: #0284c7;">⚙️</div>
+          <div class="schematic-node-title">Vendor / Supplier</div>
+          <div class="schematic-node-role">Penyedia Mesin / Alat Berat / Pabrik (Penerima Transfer Dana Bersama)</div>
+        </div>
+        <div class="schematic-node node-escrow">
+          <div class="schematic-node-icon" style="background: #e0e7ff; color: #4338ca;">🏷️</div>
+          <div class="schematic-node-title">Aset Produktif</div>
+          <div class="schematic-node-role">Objek MMQ: Dimiliki Bersama, Disewakan, dan Dialihkan 100% saat Lunas</div>
+        </div>
+      `;
+
+      flowRow.innerHTML = `
+        <div class="flow-connector-card">
+          <strong>1. Joint Purchase ke Vendor</strong>
+          Bank Syariah (80%) dan Nasabah (20%) bersama-sama membayar vendor untuk pengadaan aset fisik produktif.
+        </div>
+        <div class="flow-connector-card">
+          <strong>2. Angsuran Dwi-Fungsi Bulanan</strong>
+          Setiap bulan nasabah membayar satu paket angsuran: Ujrah (sewa hishshah bank) + Pembelian porsi modal bank.
+        </div>
+        <div class="flow-connector-card">
+          <strong>3. Tamlik Hak Milik Sempurna</strong>
+          Hishshah bank menyusut dari 80% ke 0%. Pada akhir tenor, aset resmi 100% berpindah menjadi milik nasabah.
+        </div>
+      `;
+    }
   }
 
   renderComparisonMatrix() {

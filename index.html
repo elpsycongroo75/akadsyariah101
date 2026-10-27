@@ -104,6 +104,27 @@
             </div>
           </div>
 
+          <div class="three-controls-bar" id="kmkStepControls">
+            <div class="step-player-header">
+              <span class="step-badge-indicator" id="stepActiveIndicator">Tahap 1: Verifikasi SPK</span>
+              <button class="step-autoplay-btn" id="btnAutoPlay">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span id="autoPlayLabel">Auto-Play Alur</span>
+              </button>
+            </div>
+            <div class="step-buttons-list" id="threeStepButtons">
+              <button class="step-pill-btn active" data-step="1">1. SPK Kontrak</button>
+              <button class="step-pill-btn" data-step="2">2. Akad Line</button>
+              <button class="step-pill-btn" data-step="3">3. Cair Promes</button>
+              <button class="step-pill-btn" data-step="4">4. Proyek Fisik</button>
+              <button class="step-pill-btn" data-step="5">5. Termin Escrow</button>
+              <button class="step-pill-btn" data-step="6">6. Auto-Debet</button>
+            </div>
+            <div class="step-callout-text" id="stepCalloutText">
+              <strong>Bouwheer & Nasabah:</strong> Nasabah memenangkan tender proyek dan menerima Surat Perintah Kerja (SPK) resmi dari Bouwheer/Pemberi Kerja.
+            </div>
+          </div>
+
           <!-- Slider khusus MMQ untuk menggerakkan porsi kepemilikan di 3D -->
           <div class="mmq-slider-box" id="mmqSliderContainer" style="display: none;">
             <div class="mmq-slider-header">
@@ -147,6 +168,23 @@
               <!-- Fatwa pills inserted here -->
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- 2D SCHEMATIC ARCHITECTURE DIAGRAM -->
+      <section class="card schematic-section" id="schematicSection">
+        <div class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#085f3b" stroke-width="2.2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Skema Alur Transaksi & Arus Dana (Schematic Architecture)
+        </div>
+        <div class="card-subtitle" id="schematicSubtitle">Pemetaan Arus Kas & Pengendalian Risiko Rekening Escrow</div>
+
+        <div class="schematic-grid" id="schematicGrid">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div class="schematic-flow-row" id="schematicFlowRow">
+          <!-- Rendered by JS -->
         </div>
       </section>
 
