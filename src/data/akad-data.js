@@ -67,7 +67,7 @@ export const AKAD_DATA = {
         step: 5,
         title: 'Incoming Billing ke Rekening Escrow',
         actor: 'Bouwheer / Pemberi Kerja',
-        desc: 'Bouwheer mentransfer pembayaran termin langsung ke Rekening Escrow Bank Jakarta sesuai instruksi pembayaran (standing instruction). Dana tertampung di rekening yang dikunci otorisasi bank.',
+        desc: 'Bouwheer mentransfer pembayaran termin langsung ke Rekening Escrow Bank Metropolitan sesuai instruksi pembayaran (standing instruction). Dana tertampung di rekening yang dikunci otorisasi bank.',
         icon: 'shield-check'
       },
       {
